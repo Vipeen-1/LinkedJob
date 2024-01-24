@@ -169,5 +169,16 @@ export class AuthService {
       }))
   }
 
+  forgetPassword(body:any){
+    return this.http.post<any>(`https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=${this.ApiKey}`,{
+      requestType:'PASSWORD_RESET',
+      email:body.email
+    }).pipe(
+      catchError((err)=>{
+        console.log('authservice',err);
+        return this._errorService.handleError(err);
+      }));
+  }
+
 
 }

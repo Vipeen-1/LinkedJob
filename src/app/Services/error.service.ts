@@ -30,7 +30,8 @@ export class ErrorService {
     USER_DISABLED: 'The user account has been disabled by an administrator.',
     INVALID_LOGIN_CREDENTIALS : 'The email address or password is incorrect.',
     INVALID_ID_TOKEN:'The user credential is no longer valid. The user must sign in again.',
-    WEAK_PASSWORD: 'The password must be 6 characters long or more.'
+    WEAK_PASSWORD: 'The password must be 6 characters long or more.',
+    INVALID_EMAIL: 'This email is Unknown'
     
     
   }

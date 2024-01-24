@@ -19,6 +19,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { SearchComponent } from './container/search/search.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 
 const routes:Routes=[
   {path:'',component:AuthComponent},
@@ -30,6 +31,7 @@ const routes:Routes=[
   {path:'Apply',component:CreateJobComponent},
   {path:'Profile',component:ProfileComponent},
   {path:'Reset-Password' , component: ChangePasswordComponent},
+  {path:'foregt-password',component:ForgetPasswordComponent},
   {path:'**', component:NotFoundComponent}
 
 ]
@@ -49,6 +51,7 @@ const routes:Routes=[
     SearchComponent,
     ProfileComponent,
     ChangePasswordComponent,
+    ForgetPasswordComponent,
     
   ],
   imports: [
