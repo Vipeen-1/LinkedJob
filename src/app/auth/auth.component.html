@@ -1,56 +1,102 @@
 <div class="container mt-5">
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-        <form [formGroup]="authForm" (ngSubmit)="onFormSubmit()">
-          <h2>{{ loginMode ? 'Welcome to LinkedJob' : 'Get Started with LinkedJob' }}</h2>
-          
-          <div class="input-group">
-            <!-- <div class="input-group-prepend">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <h2>{{ loginMode ? 'Welcome to LinkedJob' : 'Get Started with LinkedJob' }}</h2>
+      <form [formGroup]="authForm" (ngSubmit)="onFormSubmit()">
+
+        <div class="input-group">
+          <!-- <div class="input-group-prepend">
               <span class="input-group-text" id="basic-addon1"><i class="fa fa-envelope"></i></span>
             </div> -->
-            <label for="Username" class="sr-only"><strong>Username:</strong></label>
-            <input type="text" formControlName="username" class="form-control" id="Username" placeholder="*Username">
-            <small *ngIf="authForm.get('username').invalid && authForm.get('username').touched" class="text-danger d-block mb-2">
-                *Please enter your Username
-            </small>            
-          </div>
-  
-          <div class="input-group mb-3" >
-            <!-- <div class="input-group-prepend">
+          <label for="Username" class="sr-only"><strong>Username:</strong></label>
+          <input type="text" formControlName="username" class="form-control" id="Username" placeholder="*Username">
+          <small *ngIf="authForm.get('username').invalid && authForm.get('username').touched"
+            class="text-danger d-block mb-2">
+            *Please enter your Username
+          </small>
+        </div>
+
+        <div class="input-group mb-3">
+          <!-- <div class="input-group-prepend">
               <span class="input-group-text" id="basic-addon2"><i class="fa fa-lock"></i></span>
             </div> -->
-            <label for="Password" class="sr-only"><strong>Password:</strong></label>
-            <input type="password" formControlName="password" class="form-control" id="Password" placeholder="*Password">
-            <small *ngIf="authForm.get('password').invalid && authForm.get('password').touched" class="text-danger d-block mb-2">
-              *Please enter your Password
-            </small>
-            <div *ngIf="!loginMode && authForm.get('password').invalid" class="col-auto">
-                <span id="passwordHelpInline" class="form-text">
-                  Must be 6-20 characters long.
-                </span>
-              </div>
+          <label for="Password" class="sr-only"><strong>Password:</strong></label>
+          <input type="password" formControlName="password" class="form-control" id="Password" placeholder="*Password">
+          <small *ngIf="authForm.get('password').invalid && authForm.get('password').touched"
+            class="text-danger d-block mb-2">
+            *Please enter your Password
+          </small>
+          <div *ngIf="!loginMode && authForm.get('password').invalid" class="col-auto">
+            <span id="passwordHelpInline" class="form-text">
+              Must be 6-20 characters long.
+            </span>
           </div>
+        </div>
 
-          <!-- <div>
+        <!-- <div>
             <div *ngIf="authForm.invalid && authForm.untouched">
               <small>
                 Please enter Username and password
               </small>
             </div>
           </div> -->
-          
-          <div (click)="onEmptyFormSubmit()">
-            <button type="submit" class="btn btn-primary" [disabled]="authForm.invalid" >
-              {{ loginMode ? 'Sign In' : 'Sign Up' }}
-            </button>
-          </div>
-  
-          <p>{{ loginMode ? 'Don\'t have an account?' : 'Already have an account?' }}</p>
-          <a href="#" (click)="onLogModeChange()">{{ loginMode ? 'Create one' : 'Sign In' }}</a>
-          <br>
-          <a routerLink="/foregt-password">Forgot Password</a>
-        </form>
-      </div>
+
+        <div (click)="onEmptyFormSubmit()">
+          <button type="submit" class="btn btn-primary" [disabled]="authForm.invalid">
+            {{ loginMode ? 'Sign In' : 'Sign Up' }}
+          </button>
+        </div>
+
+        <p>{{ loginMode ? 'Don\'t have an account?' : 'Already have an account?' }}</p>
+        <a href="#" (click)="onLogModeChange()">{{ loginMode ? 'Create one' : 'Sign In' }}</a>
+        <br>
+        <a routerLink="/foregt-password">Forgot Password</a>
+      </form>
     </div>
+
+
+    <div>
+
+      <!-- <a class="btn btn-block btn-outline-primary btn-google" (click)="onGoogleSignIn()">
+        Sign in with google
+      </a> -->
+    </div>
+
+
+    <div id="g_id_onload"
+     data-client_id="935749022426-pd1dr2fsftgp49764kftlri6jqtm9qut.apps.googleusercontent.com"
+     data-context="signin"
+     data-ux_mode="popup"
+     data-login_uri="http://localhost:4200"
+     data-itp_support="true" 
+     (click)="onGoogleSignIn()">
+</div>
+
+<div class="g_id_signin"
+     data-type="standard"
+     data-shape="rectangular"
+     data-theme="outline"
+     data-text="signin_with"
+     data-size="large"
+     data-logo_alignment="left"
+     (click)="onGoogleSignIn()"
+     >
+</div>
+
+    <!-- <div id="g_id_onload"
+         data-client_id="935749022426-pd1dr2fsftgp49764kftlri6jqtm9qut.apps.googleusercontent.com"
+        data-login_uri="http://localhost:4200" 
+        data-auto_prompt="false">
+    </div>
+    <div class="g_id_signin" 
+        data-type="standard" 
+        data-size="large" 
+        data-theme="outline" 
+        data-text="sign_in_with"
+        data-shape="rectangular" 
+        data-logo_alignment="left"
+        (click)="onGoogleSignIn()">
+    </div> -->
+
   </div>
-  
+</div>

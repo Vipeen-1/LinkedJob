@@ -1,6 +1,15 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { SocialLoginModule, SocialAuthServiceConfig, SocialUser } from '@abacritt/angularx-social-login';
+import {
+  GoogleLoginProvider,
+  FacebookLoginProvider
+} from '@abacritt/angularx-social-login';
+import { GoogleSigninButtonModule } from '@abacritt/angularx-social-login';
+import { GoogleSigninButtonDirective } from '@abacritt/angularx-social-login';
+
+
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { ContainerComponent } from './container/container.component';
@@ -21,18 +30,18 @@ import { ProfileComponent } from './profile/profile.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 
-const routes:Routes=[
-  {path:'',component:AuthComponent},
-  {path:'Login',component:AuthComponent},
-  {path:'Register',component:AuthComponent},
-  {path:'Home',  canActivate:[authGuard], component:JobListComponent},
-  {path:'View-More/:id', component:JobDetailComponent},
-  {path:'Jobs',component:JobListComponent},
-  {path:'Apply',component:CreateJobComponent},
-  {path:'Profile',component:ProfileComponent},
-  {path:'Reset-Password' , component: ChangePasswordComponent},
-  {path:'foregt-password',component:ForgetPasswordComponent},
-  {path:'**', component:NotFoundComponent}
+const routes: Routes = [
+  { path: '', component: AuthComponent },
+  { path: 'Login', component: AuthComponent },
+  { path: 'Register', component: AuthComponent },
+  { path: 'Home', canActivate: [authGuard], component: JobListComponent },
+  { path: 'View-More/:id', component: JobDetailComponent },
+  { path: 'Jobs', component: JobListComponent },
+  { path: 'Apply', component: CreateJobComponent },
+  { path: 'Profile', component: ProfileComponent },
+  { path: 'Reset-Password', component: ChangePasswordComponent },
+  { path: 'foregt-password', component: ForgetPasswordComponent },
+  { path: '**', component: NotFoundComponent }
 
 ]
 
@@ -52,20 +61,40 @@ const routes:Routes=[
     ProfileComponent,
     ChangePasswordComponent,
     ForgetPasswordComponent,
-    
+
+
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule.forRoot(routes),
+    SocialLoginModule
   ],
   providers: [
-    {provide : HTTP_INTERCEPTORS,
-    useClass : AuthInterceptor,
-    multi : true
-  }
-],
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '935749022426-pd1dr2fsftgp49764kftlri6jqtm9qut.apps.googleusercontent.com'
+            )
+          }
+        ],
+        onError: (err) => {
+          console.error(err);
+        }
+      } as SocialAuthServiceConfig,
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

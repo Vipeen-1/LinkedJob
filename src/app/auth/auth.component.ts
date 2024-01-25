@@ -5,6 +5,8 @@ import { ErrorService } from '../Services/error.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthResponse } from '../authInterface/auth-response';
+import { GoogleLoginProvider, SocialAuthService } from '@abacritt/angularx-social-login';
+import { SocialUser } from "@abacritt/angularx-social-login";
 
 @Component({
   selector: 'app-auth',
@@ -14,6 +16,8 @@ import { AuthResponse } from '../authInterface/auth-response';
 export class AuthComponent implements OnInit{
 
   loginMode:boolean=true;
+  user!:SocialUser;
+  loggedIn?: boolean;
 
   authForm:FormGroup;
 
@@ -21,7 +25,8 @@ export class AuthComponent implements OnInit{
               private _authService :AuthService,
               private _errService:ErrorService,
               private router:Router,
-              private activateRoute:ActivatedRoute ){}
+              private activateRoute:ActivatedRoute,
+              private socialAuthService: SocialAuthService ){}
 
   errorMessage:string='';
 
@@ -48,6 +53,18 @@ export class AuthComponent implements OnInit{
       }
 
     })
+
+    //method for sign in with google with using the socialAuthService.
+    this.socialAuthService.authState.subscribe((user) => {
+      this.user = user;
+      this.loggedIn = (user != null);
+      console.log(this.user);
+      this._authService.googleSignIn(user.idToken).subscribe(
+        (res)=>{console.log(res)
+        this.router.navigate(['Home'])},
+        (err)=>{console.log(err)}
+      )
+    });
 
   }
 
@@ -94,7 +111,19 @@ export class AuthComponent implements OnInit{
     }
   }
 
-  
+  onGoogleSignIn(){
+    console.log('hello')
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
+      (user)=>{
+        console.log(user);
+        this._authService.googleSignIn(user.idToken).subscribe(
+          (res)=>{console.log(res);
+            console.log('hello')},
+          (err)=>{console.log(err)}
+        )
+      }
+    )
+  }
 
 
 }

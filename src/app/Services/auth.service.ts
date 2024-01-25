@@ -180,5 +180,23 @@ export class AuthService {
       }));
   }
 
+  googleSignIn(idToken){
+    return this.http.post<any>(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithIdp?key=${this.ApiKey}`,{
+      postBody:`id_token=${idToken}&providerId=google.com`,
+      requestUri:'http://localhost:4200',
+      returnIdpCredential:true,
+      returnSecureToken:true
+    }).pipe(
+      catchError((err)=>{
+        return this._errorService.handleError(err);
+      }),
+      tap((res)=>{
+        console.log('hello');
+        console.log('signUp res: ',res);
+        console.log('expires: ', res.expiresIn)
+        this.authenticatedUser(res.email, res.localId, res.idToken , +res.expiresIn)
+      })
+      )
+  }
 
 }
